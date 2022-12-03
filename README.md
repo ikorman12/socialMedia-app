@@ -1,4 +1,4 @@
-# socialMedia-app
+# Social Media API
 
 ## Table of contents
 *[Introduction](#introduction)
@@ -19,9 +19,10 @@ Javascript
 [nodemon](https://www.npmjs.com/package/nodemon)
 [Express](https://www.npmjs.com/package/inquirer)
 [Mongoosedb](https://www.mongodb.com/docs/manual/reference/)
+[Insomnia](https://insomnia.rest/products/insomnia)
 
 ## Usage
-In order to use this app, follow the deployment links below and initiate the command `npm run watch` to seed the information and get the correct data. Follow the steps the deployed video takes to look through the possible routes and chnages one can make to the database.
+Be sure to have MongoDB installed on your machine. Follow the [MongoDB installation guide on The Full-Stack Blog](https://coding-boot-camp.github.io/full-stack/mongodb/how-to-install-mongodb) to install MongoDB locally. Once done make sure to `npm i` the package.json in order to intall the necessary packages. Once installed make sure to `npm run seed` to seed your local mongo datbase. After seeding `npm run dev` will properly activate your server. follow the deployment video below on how to access the data via insomnia app.
 
 
 ## Deployment
@@ -32,7 +33,7 @@ In order to use this app, follow the deployment links below and initiate the com
 ![npm-run-watch]()
 
 ## Future
-Future implementations of this app would be to incorporate features on the front end which can work with this back end application and can help edit, add and delete commerce.
+Future implementations of this api would be to collect more data by linking a front end aspect to it where users can input data so we can grab that value and input it into the api. Once collected we can use the data to create an algorithm for a more pleasureable UI/UX.
 
 ## Credits
 Igor Korman
