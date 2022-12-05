@@ -1,15 +1,15 @@
 {
-  "name": "26-Stu_Mongoose-CRUD",
+  "name": "socialMedia-app",
   "version": "1.0.0",
-  "description": "Reverse engineer developer activity for CRUD methods in Mongoose",
+  "description": "CRUD for social media app",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
     "start": "node index",
-    "dev": "nodemon index",
-    "seed": "node utils/seed"
+    "dev": "nodemon index"
   },
   "dependencies": {
+    "dotenv": "^16.0.3",
     "express": "^4.17.1",
     "mongoose": "^6.0.13"
   },
