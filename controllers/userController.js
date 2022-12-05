@@ -1,9 +1,10 @@
-const { User, Application } = require('../models');
+const { User, Thought } = require('../models');
 
 module.exports = {
   // Get all users
   getUsers(req, res) {
     User.find()
+      .select('-__v')
       .then((users) => res.json(users))
       .catch((err) => res.status(500).json(err));
   },
@@ -23,6 +24,21 @@ module.exports = {
     User.create(req.body)
       .then((user) => res.json(user))
       .catch((err) => res.status(500).json(err));
+  },
+  //Update a user
+  updateUser(req,res) {
+    User.findOneAndUpdate(
+    {_id:req.parames.userId},
+    {$set:req.body},
+    {runValidators:true,
+    new:true}
+    )
+    .then((updatedUser) =>
+    !updatedUser
+      ? res.status(404).json({ message: 'No user with that ID' })
+      : res.json(updatedUser)
+  )
+  .catch((err) => res.status(500).json(err));
   },
   // Delete a user and associated apps
   deleteUser(req, res) {
