@@ -12,7 +12,7 @@ module.exports = {
       res.status(500).json(err);
     }
   },
-  //GET a single
+  //GET a single thought
   async getOneThought(req, res) {
     try{
       const thought = await Thought.findOne({_id : req.params.thoughId})
@@ -23,67 +23,65 @@ module.exports = {
       res.status(500).json(err);
     }
   },
-  
-  // TODO: Add comments to the functionality of the createApplication method
-  createApplication(req, res) {
-    Application.create(req.body)
-      .then((application) => {
-        return User.findOneAndUpdate(
-          { _id: req.body.userId },
-          { $addToSet: { applications: application._id } },
-          { new: true }
-        );
-      })
-      .then((user) =>
-        !user
-          ? res.status(404).json({
-              message: 'Application created, but found no user with that ID',
-            })
-          : res.json('Created the application 🎉')
-      )
-      .catch((err) => {
-        console.log(err);
-        res.status(500).json(err);
-      });
+  //Create a thought
+  async createThought(req, res) {
+    try {
+      const newThought = await Thought.create(req.body);
+      const updatedUser = await User.findOneAndUpdate(
+        {_id: req.body.userId},
+        {$push: {thoughts: newThought._id}},
+        {new:true}
+      );
+      !updatedUser
+        ?res.status(404).json({message: 'Thought created BUT no user ID!!!!'})
+        :res.json({message: 'successfully created Thought!🎉🎉🎉🎉🎉🎉🎉🎉'})
+        } catch(err){
+          console.log(err)
+          res.status(500).json(err);
+        }
   },
-  // TODO: Add comments to the functionality of the updateApplication method
-  updateApplication(req, res) {
-    Application.findOneAndUpdate(
-      { _id: req.params.applicationId },
+  //Update Thought
+  updateThought(req, res) {
+    Thought.findOneAndUpdate(
+      { _id: req.params.thoughtId },
       { $set: req.body },
       { runValidators: true, new: true }
     )
-      .then((application) =>
-        !application
-          ? res.status(404).json({ message: 'No application with this id!' })
-          : res.json(application)
+      .then((updateThought) =>
+        !updateThought
+          ? res.status(404).json({ message: 'No Thought with this id!' })
+          : res.json(updatedThought)
       )
       .catch((err) => {
         console.log(err);
         res.status(500).json(err);
       });
   },
-  // TODO: Add comments to the functionality of the deleteApplication method
-  deleteApplication(req, res) {
-    Application.findOneAndRemove({ _id: req.params.applicationId })
-      .then((application) =>
-        !application
-          ? res.status(404).json({ message: 'No application with this id!' })
+
+  //Delete Thought
+  deleteThought(req, res) {
+    Thought.findOneAndRemove({ _id: req.params.thoughtId })
+      .then((thought) =>
+        !thought
+          ? res.status(404).json({ message: 'No thought with this id!' })
           : User.findOneAndUpdate(
-              { applications: req.params.applicationId },
-              { $pull: { applications: req.params.applicationId } },
+              { thoughts: req.params.thoughtId },
+              { $pull: { thoughts: req.params.thoughtId } },
               { new: true }
             )
       )
       .then((user) =>
         !user
           ? res.status(404).json({
-              message: 'Application created but no user with this id!',
+              message: 'Thought created but no user with this id!',
             })
-          : res.json({ message: 'Application successfully deleted!' })
+          : res.json({ message: 'Thought successfully deleted!' })
       )
       .catch((err) => res.status(500).json(err));
   },
+
+
+  
   // TODO: Add comments to the functionality of the addTag method
   addTag(req, res) {
     Application.findOneAndUpdate(
