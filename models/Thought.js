@@ -1,5 +1,5 @@
-const { Schema, model } = require('mongoose');
-const Tag = require('./Tag');
+const { Schema, model } = require("mongoose");
+const Tag = require("./Reaction");
 
 // Schema to create Post model
 const applicationSchema = new Schema(
@@ -33,13 +33,13 @@ const applicationSchema = new Schema(
 
 // Create a virtual property `getTags` that gets the amount of tags associated with an application
 applicationSchema
-  .virtual('getTags')
+  .virtual("getTags")
   // Getter
   .get(function () {
     return this.tags.length;
   });
 
 // Initialize our Application model
-const Application = model('application', applicationSchema);
+const Application = model("application", applicationSchema);
 
 module.exports = Application;
