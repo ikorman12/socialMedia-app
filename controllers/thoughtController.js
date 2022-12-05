@@ -1,20 +1,29 @@
-const { Application, User } = require('../models');
+const { ObjectId } = require('mongoose').Types;
+const { User, Thought } = require('../models');
 
 module.exports = {
-  getApplications(req, res) {
-    Application.find()
-      .then((applications) => res.json(applications))
-      .catch((err) => res.status(500).json(err));
+  //GET all
+  async getThoughts(req, res) {
+    try {
+      const thoughts = await Thought.find().sort({createdAt:-1});
+      res.json(thoughts);
+    }catch(err){
+      console.log(err)
+      res.status(500).json(err);
+    }
   },
-  getSingleApplication(req, res) {
-    Application.findOne({ _id: req.params.applicationId })
-      .then((application) =>
-        !application
-          ? res.status(404).json({ message: 'No application with that ID' })
-          : res.json(application)
-      )
-      .catch((err) => res.status(500).json(err));
+  //GET a single
+  async getOneThought(req, res) {
+    try{
+      const thought = await Thought.findOne({_id : req.params.thoughId})
+      !thought ? res.status(400).json({message: 'no Thought found with this id'})
+      :res.json(thought);
+    } catch(err){
+      console.log(err)
+      res.status(500).json(err);
+    }
   },
+  
   // TODO: Add comments to the functionality of the createApplication method
   createApplication(req, res) {
     Application.create(req.body)
